@@ -13,17 +13,17 @@ public class LightReading {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime localDateTime;
+    private String localDateTime;
     private boolean lightOn;
     private boolean movementDetected;
 
     public LightReading() {
         this.lightOn = false;
-        this.localDateTime = LocalDateTime.now();
+        this.localDateTime = LocalDateTime.now().toString();
         this.movementDetected = false;
     }
 
-    public LightReading(LocalDateTime localDateTime, boolean lightOn, boolean movementDetected) {
+    public LightReading(String localDateTime, boolean lightOn, boolean movementDetected) {
         this.localDateTime = localDateTime;
         this.lightOn = lightOn;
         this.movementDetected = movementDetected;

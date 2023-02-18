@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -112,13 +114,15 @@ public class MqttSubscriberImpl extends MqttConfig implements MqttCallback {
             JSONObject obj = new JSONObject(new String(mqttMessage.getPayload()));
             boolean lightOn = obj.getBoolean("lightOn");
             boolean movementDetected = obj.getBoolean("movementDetected");
-            universalService.saveLightState(new LightReading(LocalDateTime.now(),lightOn,movementDetected));
+            DateTimeFormatter dtm = DateTimeFormatter.ofPattern("HH:mm:ss dd MMM, yyyy");
+            universalService.saveLightState(new LightReading(dtm.format(LocalDateTime.now()),lightOn,movementDetected));
         }
         if(Objects.equals(mqttTopic, "window")) {
             JSONObject obj = new JSONObject(new String(mqttMessage.getPayload()));
             boolean windowOpen = obj.getBoolean("windowOpen");
             boolean klimaOn = obj.getBoolean("klimaOn");
-            universalService.saveWindowState(new WindowReading(LocalDateTime.now(),windowOpen,klimaOn));
+            DateTimeFormatter dtm = DateTimeFormatter.ofPattern("HH:mm:ss dd MMM, yyyy");
+            universalService.saveWindowState(new WindowReading(dtm.format(LocalDateTime.now()),windowOpen,klimaOn));
         }
         if(Objects.equals(mqttTopic, "pm")) {
             JSONObject obj = new JSONObject(new String(mqttMessage.getPayload()));
@@ -127,8 +131,8 @@ public class MqttSubscriberImpl extends MqttConfig implements MqttCallback {
             Long noise = obj.getLong("noise");
             Long temperature = obj.getLong("temperature");
             Long humidity = obj.getLong("humidity");
-            Double pressure = obj.getDouble("pressure");
-            universalService.savePmState(new PmReading(LocalDateTime.now(),pm25,pm10,noise,temperature,humidity,pressure));
+            DateTimeFormatter dtm = DateTimeFormatter.ofPattern("HH:mm:ss dd MMM, yyyy");
+            universalService.savePmState(new PmReading(dtm.format(LocalDateTime.now()),pm25,pm10,noise,temperature,humidity));
         }
 
     }

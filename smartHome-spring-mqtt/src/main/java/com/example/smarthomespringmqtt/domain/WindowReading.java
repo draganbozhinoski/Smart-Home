@@ -14,18 +14,18 @@ public class WindowReading {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime localDateTime;
+    private String localDateTime;
     private boolean windowOpen;
     private boolean klimaOn;
 
-    public WindowReading(LocalDateTime localDateTime, boolean windowOpen, boolean klimaOn) {
+    public WindowReading(String localDateTime, boolean windowOpen, boolean klimaOn) {
         this.localDateTime = localDateTime;
         this.windowOpen = windowOpen;
         this.klimaOn = klimaOn;
     }
 
     public WindowReading() {
-        this.localDateTime = LocalDateTime.now();
+        this.localDateTime = LocalDateTime.now().toString();
         this.windowOpen = false;
         this.klimaOn = false;
     }

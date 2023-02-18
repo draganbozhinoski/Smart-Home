@@ -7,6 +7,8 @@ import { formatDate } from '@angular/common';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import { PrimeNGConfig } from 'primeng/api';
 import { MenuItem } from 'primeng/api'
+import { Window } from 'src/Window';
+import { Pm } from 'src/Pm';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +38,6 @@ export class AppComponent implements OnInit{
   noise:Number = -1;
   temperature:Number = -1;
   humidity:Number = -1;
-  pressure:Number = -1;
   lastPmUpdate: string = "unknown";
 
   constructor(private _mqttService: MqttService,private http:HttpClient, private primengConfig: PrimeNGConfig) {
@@ -44,7 +45,20 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    //http.get('/api/last/window').subscribe(data => console.log(data));
+    this.http.get<Window>('/api/last/window').subscribe(data => {
+      this.klimaOn = data.klimaOn;
+      this.windowOpen = data.windowOpen;
+      this.lastWindowUpdate = data.localDateTime;
+    });
+    this.http.get<Pm>('/api/last/pm').subscribe(data => {
+      this.lastPmUpdate = data.localDateTime;
+      this.pm10 = data.pm10;
+      this.pm25 = data.pm25;
+      this.noise = data.noise;
+      this.temperature = data.temperature;
+      this.humidity = data.humidity;
+    });
+
     this.windowSubscription = this._mqttService.observe('window').subscribe((message: IMqttMessage) => {
       this.parseJsonAndUpdate(message.payload.toString(),'window');
     });
@@ -75,13 +89,13 @@ export class AppComponent implements OnInit{
     if(topic == 'window') {
       this.klimaOn = JSON.parse(object["klimaOn"]);
       this.windowOpen = JSON.parse(object["windowOpen"]);
-      this.lastWindowUpdate = formatDate(new Date(),'dd MMM, yyyy HH:mm:ss','en');
+      this.lastWindowUpdate = formatDate(new Date(),'HH:mm:ss dd MMM, yyyy','en');
       //update button
     }
     if(topic == 'light') {
       this.lightOn = JSON.parse(object["lightOn"]);
       this.movementDetected = JSON.parse(object["movementDetected"]);
-      this.lastLightUpdate = formatDate(new Date(),'dd MMM, yyyy HH:mm:ss','en');
+      this.lastLightUpdate = formatDate(new Date(),'HH:mm:ss dd MMM, yyyy','en');
       //update button
     }
     if(topic == 'pm') {
@@ -90,8 +104,7 @@ export class AppComponent implements OnInit{
       this.noise = object["noise"];
       this.temperature = object["temperature"];
       this.humidity = object["humidity"];
-      this.pressure = object["pressure"];
-      this.lastPmUpdate = formatDate(new Date(),'dd MMM, yyyy HH:mm:ss','en');
+      this.lastPmUpdate = formatDate(new Date(),'HH:mm:ss dd MMM, yyyy','en');
       //update readings
     }
   }
