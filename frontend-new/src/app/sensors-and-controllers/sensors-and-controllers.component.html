@@ -1,0 +1,110 @@
+<div class="pb-5">
+    <p-divider align="center">
+        <h3>Controllers</h3>
+    </p-divider>
+    <div class="row justify-content-center">
+        <button class="button-80 col-4 mr-5" *ngIf="!klimaOn" [disabled]="windowOpen" (click)="updateKlimaState()">
+            <h5 class="text-center font-weight-bold">Air Condition</h5>
+            <div class="d-flex align-items-center justify-content-center">
+                <i><img src="assets/images/ac.png" width="34" height="34"></i>
+                <div class="pl-3">
+                    OFF
+                </div>
+            </div>
+        </button>
+        <button class="button-80 bg-success text-white col-4 mr-5" *ngIf="klimaOn" [disabled]="windowOpen"
+            (click)="updateKlimaState()">
+            <h5 class="text-center font-weight-bold">Air Condition</h5>
+            <div class="d-flex align-items-center justify-content-center">
+                <i><img src="assets/images/ac.png" width="34" height="34"></i>
+                <div class="pl-3">
+                    ON
+                </div>
+            </div>
+        </button>
+        <button class="button-80 col-4 mr-5" *ngIf="!lightOn" [disabled]="auto" (click)="updateLightState()">
+            <h5 class="text-center font-weight-bold">Indoor Lights</h5>
+            <div class="d-flex align-items-center justify-content-center">
+                <i><img src="assets/images/lights.png" width="34" height="34"></i>
+                <div class="pl-3">
+                    OFF
+                </div>
+            </div>
+        </button>
+        <button class="button-80 bg-success text-white col-4 mr-5" *ngIf="lightOn" [disabled]="auto"
+            (click)="updateLightState()">
+            <h5 class="text-center font-weight-bold">Indoor Lights</h5>
+            <div class="d-flex align-items-center justify-content-center">
+                <i><img src="assets/images/lights.png" width="34" height="34"></i>
+                <div class="pl-3">
+                    ON
+                </div>
+            </div>
+        </button>
+    </div>
+    <p-divider align="center">
+        <h3>Sensors</h3>
+    </p-divider>
+    <div class="row">
+        <div class="col-3" *ngIf="!movementDetected">
+            <div class="card info-card bg-white">
+                <div class="card-body">
+                    <h5 class="card-title">Object Detector</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i><img src="assets/images/motionSensor.png" width="34" height="34"></i>
+                        </div>&ensp;&ensp;
+                        <div class="pl-3">
+                            <h6>NOT DETECTED</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3" *ngIf="movementDetected">
+            <div class="card info-card bg-danger text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Object Detector</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i><img src="assets/images/motionSensor.png" width="34" height="34"></i>
+                        </div>&ensp;&ensp;
+                        <div class="pl-3">
+                            <h6>DETECTED</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3" *ngIf="!windowOpen">
+            <div class="card info-card">
+                <div class="card-body">
+                    <h5 class="card-title">Window</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i><img src="assets/images/window.png" width="34" height="34"></i>
+                        </div>
+                        <div class="pl-3">
+                            <h6>CLOSED</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3" *ngIf="windowOpen">
+            <div class="card info-card bg-danger text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Window</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i><img src="assets/images/window.png" width="34" height="34"></i>
+                        </div>&ensp;&ensp;
+                        <div class="pl-3">
+                            <h6>OPEN</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

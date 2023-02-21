@@ -9,7 +9,17 @@ import { FormsModule } from '@angular/forms';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import {CommonModule } from '@angular/common'
 import { TabViewModule} from 'primeng/tabview'
-import { ButtonModule } from 'primeng/button'
+import { ButtonModule } from 'primeng/button';
+import { AirParametersComponent } from './air-parameters/air-parameters.component';
+import { SensorsAndControllersComponent } from './sensors-and-controllers/sensors-and-controllers.component';
+import {DividerModule} from 'primeng/divider';
+import {FieldsetModule} from 'primeng/fieldset';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {PanelModule} from 'primeng/panel';
+import {TableModule} from 'primeng/table';
+import {BadgeModule} from 'primeng/badge';
+
+
 
 const certificate = `-----BEGIN CERTIFICATE-----
 MIIFazCCA1OgAwIBAgIRAIIQz7DSQONZRGPgu2OCiwAwDQYJKoZIhvcNAQELBQAw
@@ -59,6 +69,8 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
 @NgModule({
   declarations: [
     AppComponent,
+    AirParametersComponent,
+    SensorsAndControllersComponent
     
     ],
   imports: [
@@ -66,10 +78,16 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
     InputSwitchModule,
     TabViewModule,
     CommonModule,
-    ButtonModule
+    ButtonModule,
+    DividerModule,
+    FieldsetModule,
+    PanelModule,
+    TableModule,
+    BadgeModule
     ],
   providers: [],
   bootstrap: [AppComponent]

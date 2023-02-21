@@ -20,93 +20,11 @@ import { Pm } from 'src/Pm';
 })
 export class AppComponent implements OnInit{
   messages: string[] = [];
-  windowSubscription: Subscription | undefined;
-  lightSubscription: Subscription | undefined;
-  pmSubscription: Subscription | undefined;
-  
-  klimaOn: Boolean = false;
-  windowOpen: Boolean = false;
-  lastWindowUpdate: string = "unknown";
-  auto: Boolean = false;
 
-  movementDetected: Boolean = false;
-  lightOn: Boolean = false;
-  lastLightUpdate: string = "unknown";
-
-  pm25:Number = -1;
-  pm10:Number = -1;
-  noise:Number = -1;
-  temperature:Number = -1;
-  humidity:Number = -1;
-  lastPmUpdate: string = "unknown";
-
-  constructor(private _mqttService: MqttService,private http:HttpClient, private primengConfig: PrimeNGConfig) {
-    this.primengConfig.ripple = true;
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.http.get<Window>('/api/last/window').subscribe(data => {
-      this.klimaOn = data.klimaOn;
-      this.windowOpen = data.windowOpen;
-      this.lastWindowUpdate = data.localDateTime;
-    });
-    this.http.get<Pm>('/api/last/pm').subscribe(data => {
-      this.lastPmUpdate = data.localDateTime;
-      this.pm10 = data.pm10;
-      this.pm25 = data.pm25;
-      this.noise = data.noise;
-      this.temperature = data.temperature;
-      this.humidity = data.humidity;
-    });
 
-    this.windowSubscription = this._mqttService.observe('window').subscribe((message: IMqttMessage) => {
-      this.parseJsonAndUpdate(message.payload.toString(),'window');
-    });
-    this.lightSubscription = this._mqttService.observe('light').subscribe((message: IMqttMessage) => {
-      this.parseJsonAndUpdate(message.payload.toString(),'light');
-    });
-    this.pmSubscription = this._mqttService.observe('pm').subscribe((message: IMqttMessage) => {
-      this.parseJsonAndUpdate(message.payload.toString(),'pm');
-    });  
   }
-  updateKlimaState() {
-    this._mqttService.publish('window',`
-      {
-        "klimaOn":${!this.klimaOn},
-        "windowOpen":${this.windowOpen}
-      }
-    `).subscribe();
-  }
-  updateLightState() {
-    this._mqttService.publish('light', `{
-      "lightOn":${!this.lightOn},
-      "movementDetected":${this.movementDetected}
-    }`).subscribe()
-  }
-  parseJsonAndUpdate(message: string,topic: String) {
-    let object = JSON.parse(message);
-    console.log(object,message);
-    if(topic == 'window') {
-      this.klimaOn = JSON.parse(object["klimaOn"]);
-      this.windowOpen = JSON.parse(object["windowOpen"]);
-      this.lastWindowUpdate = formatDate(new Date(),'HH:mm:ss dd MMM, yyyy','en');
-      //update button
-    }
-    if(topic == 'light') {
-      this.lightOn = JSON.parse(object["lightOn"]);
-      this.movementDetected = JSON.parse(object["movementDetected"]);
-      this.lastLightUpdate = formatDate(new Date(),'HH:mm:ss dd MMM, yyyy','en');
-      //update button
-    }
-    if(topic == 'pm') {
-      this.pm25 = object["pm25"];
-      this.pm10 = object["pm10"];
-      this.noise = object["noise"];
-      this.temperature = object["temperature"];
-      this.humidity = object["humidity"];
-      this.lastPmUpdate = formatDate(new Date(),'HH:mm:ss dd MMM, yyyy','en');
-      //update readings
-    }
-  }
-
 }

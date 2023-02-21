@@ -1,0 +1,115 @@
+<div>
+    <p-divider align="center">
+        <h3>Air Parameters</h3>
+    </p-divider>
+    <div class="row">
+      <div class="col">
+        <div class="card info-card">
+          <div class="card-body">
+            <h5 class="card-title">Temperature <p-badge [severity]="getTemperatureSeverity()"></p-badge></h5>
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i><img src="assets/images/thermometer.png" width="34" height="34"></i>
+              </div>&ensp;&ensp;
+              <div class="pl-3">
+                <h6>{{temperature}} ℃</h6>
+              </div>
+            </div>
+            <p class="card-text"><small class="text-muted">Last updated {{lastPmUpdate}}</small></p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card info-card">
+          <div class="card-body">
+            <h5 class="card-title">Humidity <p-badge [severity]="getHumiditySeverity()"></p-badge></h5>
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i><img src="assets/images/humidity.png" width="34" height="34"></i>
+              </div>&ensp;&ensp;
+              <div class="pl-3">
+                <h6>{{humidity}} %</h6>
+              </div>
+            </div>
+            <p class="card-text"><small class="text-muted">Last updated {{lastPmUpdate}}</small></p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card info-card">
+          <div class="card-body">
+            <h5 class="card-title">Noise <p-badge [severity]="getNoiseSeverity()"></p-badge></h5>
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i><img src="assets/images/noisy.png" width="34" height="34"></i>
+              </div>&ensp;&ensp;
+              <div class="pl-3">
+                <h6>{{noise}} dB</h6>
+              </div>
+            </div>
+            <p class="card-text"><small class="text-muted">Last updated {{lastPmUpdate}}</small></p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card info-card">
+          <div class="card-body">
+            <h5 class="card-title">PM 10 <p-badge [severity]="getPm10Severity()"></p-badge></h5>
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i><img src="assets/images/pm10.jpg" width="34" height="34"></i>
+              </div>&ensp;&ensp;
+              <div class="pl-3">
+                <h6>{{pm10}} µg/m3</h6>
+              </div>
+            </div>
+            <p class="card-text"><small class="text-muted">Last updated {{lastPmUpdate}}</small></p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card info-card">
+          <div class="card-body">
+            <h5 class="card-title">PM 2,5 <p-badge [severity]="getPm25Severity()"></p-badge></h5>
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i><img src="assets/images/pm25.jpg" width="34" height="34"></i>
+              </div>&ensp;&ensp;
+              <div class="pl-3">
+                <h6>{{pm25}} µg/m3</h6>
+              </div>
+            </div>
+            <p class="card-text"><small class="text-muted">Last updated {{lastPmUpdate}}</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4">
+    <p-panel header="Show all measurings" [toggleable]="true" [collapsed]="true" class="mt-4">
+        <p-table [value]="allPmReadings">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Date</th>
+                    <th>Temperature</th>
+                    <th>Humidity</th>
+                    <th>Noise</th>
+                    <th>pm10</th>
+                    <th>pm2,5</th>
+                    <th>Status</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-measuring>
+                <tr>
+                    <td>{{measuring.localDateTime}}</td>
+                    <td>{{measuring.temperature}} ℃</td>
+                    <td>{{measuring.humidity}} %</td>
+                    <td>{{measuring.noise}} dB</td>
+                    <td>{{measuring.pm10}} µg/m3</td>
+                    <td>{{measuring.pm25}} µg/m3</td>
+                    <td><p-badge [value]="getText(measuring)" [severity]="getSeverity(measuring)"></p-badge></td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-panel>
+</div>
+</div>
