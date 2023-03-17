@@ -19,18 +19,18 @@
 DHT dht(DHTPIN, DHTTYPE);
 
 const char* ssid     = "Dragan's Galaxy S21+ 5G";
-const char* password = "urpv0342";
+const char* password = "pass";
 WiFiClientSecure wifiClient;
 HTTPClient http;
-const char* mqtt_username = "dragan";
-const char* mqtt_password = "123456789Dd";
+const char* mqtt_username = "user";
+const char* mqtt_password = "pass";
 const char* mqtt_topic = "pm";
 //MQTT DEFINITIONS
 PubSubClient mqttClient(wifiClient); 
-const char *mqttServer = "0e2b872d30104e009127c52455bcd6be.s2.eu.hivemq.cloud";
+const char *mqttServer = "server";
 int mqttPort = 8883;
 int counter = 0;
-static const char *fingerprint PROGMEM = "4A 86 7A 3A 9A 81 83 FF 1F 6E 35 B1 C5 7A 6B 9E 0C D0 41 83";
+static const char *fingerprint PROGMEM = "fingerprint";
 const char ca_cert[] PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
 MIIFXjCCBEagAwIBAgISAwqKoRgzKvf6r3r1hXjrqrfaMA0GCSqGSIb3DQEBCwUA
